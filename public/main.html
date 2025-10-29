@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Recipe Recommendations</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="row">
+    <button class="theme-toggle" id="themeBtn" title="Toggle theme">🌙</button>
+    <h1>AI-Powered Recipe Suggestions</h1>
+    <p>Enter ingredients and your goal. We’ll suggest 3 quick dishes.</p>
+
+    <form id="form">
+      <label>Ingredients you have:</label>
+      <textarea name="ingredients" rows="4" placeholder="chicken breast, rice, eggs, tomato" required></textarea>
+
+      <label>Your goal:</label>
+      <select name="goal" required>
+        <option value="weight loss">Weight Loss</option>
+        <option value="muscle gain">Muscle Gain</option>
+        <option value="healthy eating">Healthy Eating</option>
+      </select>
+
+      <button type="submit">Get Recipe Suggestions</button>
+    </form>
+
+    <div id="status" class="spinner"></div>
+    <div id="out" class="recipes"></div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
