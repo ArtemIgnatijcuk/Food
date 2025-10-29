@@ -3,11 +3,15 @@ import OpenAI from 'openai';
 import dotenv from 'dotenv';
 import path from 'path';
 import fs from 'fs';
+import { fileURLToPath } from 'url';
+import { createRequire } from 'module';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // 0) Ініціалізація клієнта
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -26,6 +30,7 @@ app.get('/app.js', (req: Request, res: Response) => {
     const tsCode = fs.readFileSync(tsPath, 'utf8');
     // require typescript at runtime (devDependency should be installed for dev)
     // keep this dynamic so server still starts if typescript is missing (returns helpful error)
+    const require = createRequire(import.meta.url);
     let ts: any;
     try { ts = require('typescript'); } catch (e) {
       return res.status(500).type('application/javascript').send(`// TypeScript transpiler is not installed. Run 'npm install' or build the project.\nconsole.error('typescript not installed');`);
@@ -130,6 +135,9 @@ Return JSON exactly like:
 
 // 6) Старт
 app.listen(PORT, () => {
+  console.log('OPENAI key loaded:', !!process.env.OPENAI_API_KEY);
+  console.log(`Server is running on http://localhost:${PORT}`);
+  return;
   console.log('🔑 OPENAI key loaded:', !!process.env.OPENAI_API_KEY);
   console.log(`✅ Server is running on http://localhost:${PORT}`);
 });

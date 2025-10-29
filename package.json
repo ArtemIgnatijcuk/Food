@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "main": "dist/src/index.js",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "build": "tsc && node ./scripts/copy-dist-public.js",
     "watch": "tsc -w",
-    "dev": "ts-node src/index.ts",
+    "dev": "node --loader ts-node/esm src/index.ts",
     "start": "node dist/src/index.js"
   },
   "dependencies": {
